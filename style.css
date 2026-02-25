@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+img {
+    width: 100%;
+    height: auto;
+}
+ul {
+    list-style-type: none;
+}
+a {
+    text-decoration: none;
+}
+header {
+    background-color: #DC0A2D;
+}
+main {
+    margin: 0.5rem;
+    border-radius: 80%;
+}
+#pokemon-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+}
