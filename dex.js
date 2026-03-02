@@ -1,3 +1,21 @@
+const searchBar = document.querySelector("#search-bar")
+const searchX = document.querySelector("#search-x")
+searchBar.addEventListener("input", showX)
+searchX.addEventListener("click", clearInput)
+function showX() {
+    if(searchX.classList.contains("invisible")) {
+        searchX.classList.remove("invisible")
+        searchX.classList.add("visible")
+    }
+}
+function clearInput() {
+    if(searchBar !== "") {
+        searchX.classList.remove("visible")
+        searchX.classList.add("invisible")
+        searchBar.value = ""
+    }
+}
+
 const mainDom = document.querySelector("main")
 let offset = 0
 let limit = 20
@@ -44,7 +62,7 @@ const observer = new IntersectionObserver((entries) => {
             if(offset < 1350) {
                 fetchPokemon(offset)
             } else {
-                console.log("END")
+                console.log("END OF DEX")
             }
         }
     })
