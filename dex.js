@@ -3,17 +3,6 @@ let offset = 0
 let limit = 20
 const spriteUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"
 
-/* const url = new URL("https://pokeapi.co/api/v2/pokemon/")
-const listDom = document.querySelector("#pokemon-list")
-
-fetch(url)
-    .then(response => response.json())
-    .then(data => data.results.forEach(pokemon => {
-        const listItem = document.createElement("li")
-        listItem.textContent = pokemon.name
-        listDom.append(listItem)
-    })) */
-
 function fetchPokemon() {
     fetch(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`)
         .then(response => response.json())
@@ -26,12 +15,12 @@ function displayPokemon(data) {
     const results = data.results
     const pokemonString = results.map((result) => {
         const {name, url} = result
-        const id = getPokemonId(url)
+        const dexNumber = getPokemonId(url)
         return /*html*/ `
         <article>
-            <p>#${id}</p>
+            <p>#${dexNumber.padStart(3, "0")}</p>
             <h2>${name}</h2>
-            <img src="${spriteUrl}${id}.png">
+            <img src="${spriteUrl}${dexNumber}.png">
             <a href="details.html"></a>
         </article>
         `

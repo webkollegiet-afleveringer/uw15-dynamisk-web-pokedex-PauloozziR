@@ -13,31 +13,84 @@ ul {
 a {
     text-decoration: none;
 }
+button {
+    border: none;
+    cursor: pointer;
+}
+h1 {
+    font-size: calc(24px + (32 - 24) * ((100vw - 300px) / (1600 - 300)));
+}
+.visible {
+    display: block;
+}
+.invisible {
+    display: none;
+}
 #wrapper {
     background-color: #DC0A2D;
+    font-family: "Poppins", sans-serif;
 }
 header {
     color: #fff;
+    padding: 2rem;
+}
+header section {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+header .pokeball, #search-glass, #search-x {
+    line-height: 0rem;
+}
+nav {
+    display: grid;
+    grid-template-columns: 85% 5%;
+    grid-template-rows: 3rem;
+    column-gap: 10%;
+}
+#search-glass, #search-bar, #search-x {
+    grid-column: 1;
+    grid-row: 1;
+}
+#search-glass {
+    align-self: center;
+    margin: 0 2%;
+    z-index: 1;
+}
+#search-bar {
+    border: none;
+    border-radius: 2rem;
+    padding-left: 6%;
+}
+#search-x {
+    justify-self: end;
+    align-self: center;
+    margin: 0 2%;
+    z-index: 1;
+}
+nav button {
+    border-radius: 2rem;
 }
 main {
     margin: 0.5rem;
     padding: 3rem 2% 0;
+    border-radius: 1rem;
+    background-color: #fff;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto;
     gap: 1.5rem;
-    background-color: #fff;
-    border-radius: 2%;
 }
 article {
+    padding: 1rem;
+    border: 1px solid #E0E0E0;
+    border-radius: 1rem;
+    background: linear-gradient(#fff 62%, #E0E0E0 40%);
+    filter: drop-shadow(0 2px 3px #666);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto;
-    padding: 1rem;
-    border: 1px solid #E0E0E0;
-    border-radius: 5%;
-    background: linear-gradient(#fff 62%, #E0E0E0 40%);
-    filter: drop-shadow(0 2px 3px #666);
 }
 article p {
     grid-column: 3;

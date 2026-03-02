@@ -10,12 +10,12 @@ function displayPokemonDetails(data) {
     const results = data.results
     const pokemonString = results.map((result) => {
         const {name, url, stats, types, height, weight, abilities} = result
-        const id = getPokemonId(url)
+        const dexNumber = getPokemonId(url)
         return /*html*/ `
         <article>
             <h2>${name}</h2>
-            <p>#${id}</p>
-            <img src="${spriteUrl}${id}.png">
+            <p>"#"${dexNumber.padStart(4, "0")}</p>
+            <img src="${spriteUrl}${dexNumber}.png">
             <div>
                 <p>${types[0]}</p>
                 <p>${types[1]}</p>
