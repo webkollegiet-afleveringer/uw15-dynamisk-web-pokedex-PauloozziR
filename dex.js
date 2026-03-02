@@ -32,6 +32,7 @@ function displayPokemon(data) {
             <p>#${id}</p>
             <h2>${name}</h2>
             <img src="${spriteUrl}${id}.png">
+            <a href="details.html"></a>
         </article>
         `
     }).join("");
@@ -61,7 +62,13 @@ const observer = new IntersectionObserver((entries) => {
 
 fetchPokemon(offset)
 
+/* const articleDom = document.querySelectorAll("article")
+articleDom.addEventListener("click", goToDetails)
 
+articleDom.forEach((article) => {
+    article.setAttribute("href", `detaljer.html?id=${id}`)
+    article.addEventListener
+}) */
 
 /* pokemon artwork fetch from??
 "sprites": {
