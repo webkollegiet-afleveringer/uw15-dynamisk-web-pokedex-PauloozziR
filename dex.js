@@ -16,10 +16,13 @@ function displayPokemon(data) {
     const pokemonString = results.map((result) => {
         const {name, url} = result
         const dexNumber = getPokemonId(url)
+        const capitalizedName =
+            name.charAt(0).toUpperCase()
+            + name.slice(1)
         return /*html*/ `
         <article>
             <p>#${dexNumber.padStart(3, "0")}</p>
-            <h2>${name}</h2>
+            <h2>${capitalizedName}</h2>
             <img src="${spriteUrl}${dexNumber}.png">
             <a href="details.html"></a>
         </article>
