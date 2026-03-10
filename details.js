@@ -30,18 +30,22 @@ function fetchPokemon() {
 } */
 
 function displayPokemonDetails(data) {
-        const {types=[], weight, height, abilities=[], stats=[]} = data
+        const {types, weight, height, abilities=[], stats} = data
         const dexNumber = getPokemonId(url)
         const capitalizedName =
             name.charAt(0).toUpperCase()
             + name.slice(1)
         const pokemonDetailCard = /*html*/ `
         <article id="detail-card">
+            <span>${arrowLeft}</span>
             <h2>${capitalizedName}</h2>
             <p>#${dexNumber.padStart(3, "0")}</p>
             <figure>
+                <span>${chevronLeft}</span>
                 <img src="${artworkUrl}${dexNumber}.png">
+                <span>${chevronRight}</span>
             </figure>
+            <span>${pokeballBig}</span>
             <section>
                 <p>${types[0]}</p>
                 <p>${types[1]}</p>
@@ -58,10 +62,10 @@ function displayPokemonDetails(data) {
                 </div>
                 <div>
                     <ul>
-                        <li>${abilities[0].name}</li>
-                        <li>${abilities[1].name}</li>
-                        <li>${abilities[2].name}</li>
-                        <li>${abilities[3].name}</li>
+                        <li>${abilities[0]}</li>
+                        <li>${abilities[1]}</li>
+                        <li>${abilities[2]}</li>
+                        <li>${abilities[3]}</li>
                     </ul>
                     <p>Abilities</p>
                 </div>
