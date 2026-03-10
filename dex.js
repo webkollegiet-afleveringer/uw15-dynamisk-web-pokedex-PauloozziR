@@ -14,16 +14,16 @@ let pokemonsArray = []
 let searchMethod = "name"
 
 /* const searchDom = document.querySelector("#search-bar")
-const searchX = document.querySelector("#search-x")
-searchDom.addEventListener("input", showX)
-searchX.addEventListener("click", clearInput)
-function showX() {
+const searchX = document.querySelector("#search-x") */
+/* searchDom.addEventListener("input", showX)
+searchX.addEventListener("click", clearInput) */
+/* function showX(searchDom) {
     if(searchX.classList.contains("invisible")) {
         searchX.classList.remove("invisible")
         searchX.classList.add("visible")
     }
 }
-function clearInput() {
+function clearInput(searchDom) {
     if(searchDom !== "") {
         searchX.classList.remove("visible")
         searchX.classList.add("invisible")
@@ -40,8 +40,9 @@ async function init() {
     pokemonsArray = data.results
     displayHeader()
     const searchDom = document.querySelector("#search-bar")
+    const searchX = document.querySelector("#search-x")
     shiftSearchMethod(searchDom)
-    searchPokemon(searchDom)
+    searchPokemon(searchDom, searchX)
 }
 
 function shiftSearchMethod(searchDom) {
@@ -70,13 +71,14 @@ function shiftSearchIcon(searchMethod, sortButtonDom) {
     fetchPokemon()
 }
 
-function searchPokemon(searchDom) {
+function searchPokemon(searchDom, searchX) {
     searchDom.addEventListener("input", (event) => {
         if(searchDom.value === "") {
             fetchPokemon()
         }
         const inputValue = event.target.value.toLowerCase()
         runSearch(inputValue)
+        showX(searchX)
     })
 }
 
@@ -111,7 +113,7 @@ function searchById(pokemonsArray, id) {
 
 function displaySearch(data) {
     mainDom.innerHTML = ""
-    const pokemonsArray = data
+    const pokemonTemplate = data
     .map((pokemon) => {
         const pokemonIndex = getPokemonId(pokemon.url)
         const basePath = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/"
@@ -124,7 +126,7 @@ function displaySearch(data) {
         </figure>`
         return searchTemplate
     }).join("")
-    mainDom.insertAdjacentHTML("beforeend", pokemonsArray)
+    mainDom.insertAdjacentHTML("beforeend", pokemonTemplate)
 }
 
 function fetchPokemon() {
@@ -191,6 +193,22 @@ function searchByName(pokemonsArray, letter) {
     return pokemonsArray.filter((pokemon) =>
         pokemon.name.includes(letter.toLowerCase())
     )
+}
+
+function showX(searchX) {
+    if(searchX.classList.contains("invisible")) {
+        searchX.classList.remove("invisible")
+        searchX.classList.add("visible")
+    }
+    searchX.addEventListener("click", clearInput)
+}
+function clearInput(searchDom, searchX) {
+    if(searchDom.value !== "") {
+        searchX.classList.remove("visible")
+        searchX.classList.add("invisible")
+        searchDom.value = ""
+        fetchPokemon()
+    }
 }
 
 const observer = new IntersectionObserver((entries) => {
