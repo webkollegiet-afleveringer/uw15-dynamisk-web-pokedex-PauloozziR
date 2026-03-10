@@ -1,24 +1,21 @@
 import { pokeballSmall, searchIcon, xIcon, letter, tag } from "./icons.js"
 
 const pageSearch = window.location.search;
-console.log(pageSearch);
 const params = new URLSearchParams(pageSearch);
-console.log(params);
 let id = params.get("id")
-console.log(id);
 const baseUrl = `https://pokeapi.co/api/v2/pokemon/`
-console.log(baseUrl);
 
 const bodyWrapperDom = document.querySelector("#body-wrapper")
 const mainDom = document.querySelector("main")
 let offset = 0
 let limit = 20
 const artworkUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"
-let pokemons = []
+let pokemonsArray = []
+let searchMethod = "name"
 
-/* const searchBar = document.querySelector("#search-bar")
+/* const searchDom = document.querySelector("#search-bar")
 const searchX = document.querySelector("#search-x")
-searchBar.addEventListener("input", showX)
+searchDom.addEventListener("input", showX)
 searchX.addEventListener("click", clearInput)
 function showX() {
     if(searchX.classList.contains("invisible")) {
@@ -27,10 +24,10 @@ function showX() {
     }
 }
 function clearInput() {
-    if(searchBar !== "") {
+    if(searchDom !== "") {
         searchX.classList.remove("visible")
         searchX.classList.add("invisible")
-        searchBar.value = ""
+        searchDom.value = ""
         fetchPokemon()
         return
     }
@@ -40,15 +37,42 @@ async function init() {
     const numberOfPokemon = 1350
     const res = await fetch(`${baseUrl}?limit=${numberOfPokemon}`)
     const data = await res.json()
-    pokemons = data.results
+    pokemonsArray = data.results
     displayHeader()
-    const searchBar = document.querySelector("#search-bar")
-    searchPokemon(searchBar)
+    const searchDom = document.querySelector("#search-bar")
+    shiftSearchMethod(searchDom)
+    searchPokemon(searchDom)
 }
 
-function searchPokemon(searchBar) {
-    searchBar.addEventListener("input", (event) => {
-        if(searchBar.value === "") {
+function shiftSearchMethod(searchDom) {
+    const sortButtonDom = document.querySelector("#sort")
+    sortButtonDom.addEventListener("click", () => {
+        if(searchMethod === "name") {
+            searchMethod = "id"
+        } else {
+            searchMethod = "name"
+        }
+        shiftSearchIcon(searchMethod, sortButtonDom)
+        runSearch(searchDom.value)
+    })
+}
+
+function shiftSearchIcon(searchMethod, sortButtonDom) {
+    const inputDom = sortButtonDom.closest("header").querySelector("input")
+    inputDom.value = ""
+    if(searchMethod === "id") {
+        sortButtonDom.innerHTML = ""
+        sortButtonDom.innerHTML = tag
+    } else {
+        sortButtonDom.innerHTML = ""
+        sortButtonDom.innerHTML = letter
+    }
+    fetchPokemon()
+}
+
+function searchPokemon(searchDom) {
+    searchDom.addEventListener("input", (event) => {
+        if(searchDom.value === "") {
             fetchPokemon()
         }
         const inputValue = event.target.value.toLowerCase()
@@ -63,13 +87,31 @@ function runSearch(inputValue) {
         return
     }
     let pokemonSearchArray
-    pokemonSearchArray = searchByName(pokemons, value)
+    if(searchMethod === "name") {
+        pokemonSearchArray = searchByName(pokemonsArray, value)
+    } else {
+        pokemonSearchArray = searchById(pokemonsArray, value)
+    }
     displaySearch(pokemonSearchArray)
+}
+
+function searchById(pokemonsArray, id) {
+    id = Number(id)
+    let searchResult = pokemonsArray.filter((pokemon, index) => {
+        let pokemonUrlNumber = Number(getPokemonId(pokemon.url))
+        let searchIndex
+        searchIndex = index + 1
+        if(pokemonUrlNumber == 10001) {
+            id += 8975
+        }
+        return pokemonUrlNumber == id
+    })
+    return searchResult
 }
 
 function displaySearch(data) {
     mainDom.innerHTML = ""
-    const pokemons = data
+    const pokemonsArray = data
     .map((pokemon) => {
         const pokemonIndex = getPokemonId(pokemon.url)
         const basePath = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/"
@@ -82,7 +124,7 @@ function displaySearch(data) {
         </figure>`
         return searchTemplate
     }).join("")
-    mainDom.insertAdjacentHTML("beforeend", pokemons)
+    mainDom.insertAdjacentHTML("beforeend", pokemonsArray)
 }
 
 function fetchPokemon() {
@@ -108,7 +150,7 @@ function displayHeader() {
         <span id="search-glass">${searchIcon}</span>
         <input id="search-bar" type="search" placeholder="Search">
         <span id="search-x" class="invisible">${xIcon}</span>
-        <button>
+        <button id="sort">
             <span id="sort">${letter}</svg>
         </button>
     </nav> 
@@ -129,7 +171,7 @@ function displayPokemon(data) {
             <p>#${dexNumber.padStart(3, "0")}</p>
             <h2>${capitalizedName}</h2>
             <img src="${artworkUrl}${dexNumber}.png" alt="${capitalizedName}">
-            <a href="details.html?id=${dexNumber}?url=${url}&name=${name}"></a>
+            <a href="details.html?id=${dexNumber}&url=${url}&name=${name}"></a>
         </article>`
     }).join("")
     mainDom.insertAdjacentHTML("beforeend", pokemonString)
@@ -145,8 +187,8 @@ function formatDexNumber(id) {
     return "#" + String(id.padStart(3, "0"))
 }
 
-function searchByName(pokemonArray, letter) {
-    return pokemonArray.filter((pokemon) =>
+function searchByName(pokemonsArray, letter) {
+    return pokemonsArray.filter((pokemon) =>
         pokemon.name.includes(letter.toLowerCase())
     )
 }
