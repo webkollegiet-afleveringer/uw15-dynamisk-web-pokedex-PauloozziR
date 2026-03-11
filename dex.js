@@ -99,10 +99,8 @@ function runSearch(inputValue) {
 
 function searchById(pokemonsArray, id) {
     id = Number(id)
-    let searchResult = pokemonsArray.filter((pokemon, index) => {
+    let searchResult = pokemonsArray.filter((pokemon) => {
         let pokemonUrlNumber = Number(getPokemonId(pokemon.url))
-        let searchIndex
-        searchIndex = index + 1
         if(pokemonUrlNumber == 10001) {
             id += 8975
         }

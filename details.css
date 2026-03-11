@@ -1,0 +1,50 @@
+#detail-card {
+    background-color: ;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: auto;
+}
+#back-arrow {
+    grid-column: 2;
+    grid-row: 1;
+}
+h2 {
+    grid-column: 3;
+    grid-row: 1;
+}
+#prev-dex {
+    grid-column: 2;
+    grid-row: 2;
+}
+#next-dex {
+    grid-column: 6;
+    grid-row: 2;
+}
+#pokeball-big {
+    grid-column: 3/6;
+    grid-row: 1/span2;
+}
+#type-box {
+    grid-column: 3/span2;
+    grid-row: 3;
+    justify-self: center;
+}
+#info-heading {
+    grid-column: 3;
+    grid-row: 4;
+}
+#weight-box {
+    grid-row: 5;
+}
+#height-box {
+    grid-row: 5;
+}
+#ability-box {
+    grid-row: 5;
+}
+#flavor-text {
+    grid-row: 6;
+}
+#stat-heading {
+    grid-row: 7;
+}
